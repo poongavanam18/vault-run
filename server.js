@@ -16,7 +16,8 @@ const rooms = new Map();
 const alphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZ';
 
 const server = http.createServer((req, res) => {
-  if (req.method !== 'GET' || (req.url !== '/' && req.url !== '/index.html')) {
+  const pathname = new URL(req.url, 'http://' + (req.headers.host || 'localhost')).pathname;
+  if (req.method !== 'GET' || (pathname !== '/' && pathname !== '/index.html')) {
     res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
     return res.end('Not found');
   }
